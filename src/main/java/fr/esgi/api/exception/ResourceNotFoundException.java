@@ -1,11 +1,7 @@
-package fr.esgi.api.exceptions;
+package fr.esgi.api.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-/**
- * Created by Zakaria FAHRAOUI.
- */
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "ResourceNotFoundException not found")
 public class ResourceNotFoundException extends RuntimeException {
@@ -20,4 +16,3 @@ public class ResourceNotFoundException extends RuntimeException {
         super(message, cause);
     }
 }
-

@@ -1,4 +1,4 @@
-package fr.esgi.api.dto.model.request;
+package fr.esgi.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
