@@ -18,7 +18,6 @@ import java.util.Set;
 
 @Setter
 @Getter
-@Accessors(chain = true)
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity

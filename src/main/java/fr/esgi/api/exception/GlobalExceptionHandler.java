@@ -1,5 +1,4 @@
-package fr.esgi.api.exceptions;
-
+package fr.esgi.api.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,9 +8,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
-/**
- * Created by Zakaria FAHRAOUI.
- */
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
