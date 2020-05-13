@@ -8,6 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Created by Zakaria FAHRAOUI.
+ */
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService{
