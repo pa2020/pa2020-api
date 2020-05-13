@@ -1,10 +1,13 @@
 package fr.esgi.api.security.request;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.Set;
+
+/**
+ * Created by Zakaria FAHRAOUI.
+ */
 
 @Setter
 @Getter

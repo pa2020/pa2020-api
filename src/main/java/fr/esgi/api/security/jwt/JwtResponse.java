@@ -6,6 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * Created by Zakaria FAHRAOUI.
+ */
+
 @Getter
 @Setter
 public class JwtResponse {
