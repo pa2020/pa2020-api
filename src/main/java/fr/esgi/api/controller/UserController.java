@@ -35,7 +35,7 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
-    @GetMapping("/username")
+    @GetMapping("/filter")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public User getUsername(@RequestParam(required=false) String name){
         return userService.getUserByUsername(name);
