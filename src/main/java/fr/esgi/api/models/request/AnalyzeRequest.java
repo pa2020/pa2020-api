@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Data
 @Table(name = "analyze_requests")
 public class AnalyzeRequest implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -17,7 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Table(name = "requests")
 public class Request implements Serializable {
     private static final long serialVersionUID = 1L;
