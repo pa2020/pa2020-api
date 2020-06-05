@@ -21,7 +21,6 @@ import java.util.Set;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Data
 @Table(name = "users")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
