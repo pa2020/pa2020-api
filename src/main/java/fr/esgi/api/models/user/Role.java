@@ -3,10 +3,7 @@ package fr.esgi.api.models.user;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
-
 import javax.persistence.*;
-
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -14,7 +11,6 @@ import javax.persistence.*;
 
 @Setter
 @Getter
-@Accessors(chain = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "roles")

@@ -1,4 +1,4 @@
-package fr.esgi.api.services;
+package fr.esgi.api.dto.user;
 
 import fr.esgi.api.models.user.User;
 
@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * Created by Zakaria FAHRAOUI.
  */
-
-public interface IUserService {
+public interface IUserDto {
     List<User> getUser();
 
     User getUserById(long id);
