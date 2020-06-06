@@ -7,13 +7,9 @@ on:
   push:
     branches:
       - master
-      - developers
-      - feature/*
   pull_request:
     branches:
       - master
-      - developers
-      - feature/*
 
 jobs:
   build:
