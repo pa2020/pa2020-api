@@ -123,7 +123,7 @@ public class RequestDto implements IRequestDto{
             return null;
         }
 
-        requestToUpdate.setSetenace(request.getSetenace());
+        requestToUpdate.setSentence(request.getSentence());
         Request updatedRequest = requestRepository.save(requestToUpdate);
 
         return updatedRequest;
