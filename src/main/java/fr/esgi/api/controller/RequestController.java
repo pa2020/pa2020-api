@@ -7,10 +7,12 @@ import fr.esgi.api.services.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,7 @@ import java.util.concurrent.Future;
 public class RequestController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final IRequestService requestService;
+    private final RestTemplate restTemplate;
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -85,37 +88,46 @@ public class RequestController {
         return new ResponseEntity<Request>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/{id}/send")
+//    @PostMapping("/{id}/send")
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//    public ResponseEntity<Request> sendRequest(@PathVariable("id") Long id, @RequestParam(value = "wait", defaultValue = "false") boolean waitForAsyncResult) {
+//
+//        logger.info("> sendRequest id:{}", id);
+//
+//        Request request = null;
+//
+//        try {
+//            request = requestService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found for this id : " + id));
+//            if (request == null) {
+//                logger.info("< sendRequest id:{}", id);
+//                return new ResponseEntity<Request>(HttpStatus.NOT_FOUND);
+//            }
+//
+//            if (waitForAsyncResult) {
+//                Future<Boolean> asyncResponse = requestService
+//                        .sendAsyncWithResult(request);
+//                boolean RequestSent = asyncResponse.get();
+//                logger.info("- request client lourd sent? {}", RequestSent);
+//            } else {
+//                requestService.sendAsync(request);
+//            }
+//        } catch (Exception e) {
+//            logger.error("A problem occurred sending the Request.", e);
+//            return new ResponseEntity<Request>(
+//                    HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//        logger.info("< sendRequest id:{}", id);
+//        return new ResponseEntity<Request>(request, HttpStatus.OK);
+//    }
+
+    @PostMapping("/send")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Request> sendRequest(@PathVariable("id") Long id, @RequestParam(value = "wait", defaultValue = "false") boolean waitForAsyncResult) {
-
-        logger.info("> sendRequest id:{}", id);
-
-        Request request = null;
-
-        try {
-            request = requestService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found for this id : " + id));
-            if (request == null) {
-                logger.info("< sendRequest id:{}", id);
-                return new ResponseEntity<Request>(HttpStatus.NOT_FOUND);
-            }
-
-            if (waitForAsyncResult) {
-                Future<Boolean> asyncResponse = requestService
-                        .sendAsyncWithResult(request);
-                boolean RequestSent = asyncResponse.get();
-                logger.info("- request client lourd sent? {}", RequestSent);
-            } else {
-                requestService.sendAsync(request);
-            }
-        } catch (Exception e) {
-            logger.error("A problem occurred sending the Request.", e);
-            return new ResponseEntity<Request>(
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        logger.info("< sendRequest id:{}", id);
-        return new ResponseEntity<Request>(request, HttpStatus.OK);
+    public String sendRequest(Request request) {
+        ResponseEntity<Request> savedRequest= createRequest(request);
+        String url = "wiirlak.dynamic-dns.net:2000/analyze";
+        ResponseEntity<Request> responseEntity = restTemplate.exchange(url, HttpMethod.POST, savedRequest, Request.class);
+        return responseEntity.toString();
     }
 
 }

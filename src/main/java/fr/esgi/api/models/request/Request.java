@@ -24,7 +24,7 @@ public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long request_id;
-    private String setenace;
+    private String sentence;
     private String state;
     private Date created_time;
 
