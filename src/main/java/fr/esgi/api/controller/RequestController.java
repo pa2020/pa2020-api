@@ -1,22 +1,18 @@
 package fr.esgi.api.controller;
 
-
-import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.Future;
+
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -33,7 +29,7 @@ public class RequestController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<Request>> getAll(){
+    public ResponseEntity<List<Request>> getAll() {
         logger.info("> requests");
         List<Request> requestList = requestService.findAll();
         return new ResponseEntity<List<Request>>(requestList, HttpStatus.OK);
@@ -51,15 +47,29 @@ public class RequestController {
         return new ResponseEntity<Request>(request, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Request> createRequest(@RequestBody Request request) {
-        logger.info("> createRequest");
-
-        Request savedRequest= requestService.create(request);
-
-        logger.info("< createRequest");
-        return new ResponseEntity<Request>(savedRequest, HttpStatus.CREATED);
+    public String sendRequest(@RequestBody Request request) {
+        //Request savedRequest= requestService.create(request);
+        logger.info("< sendRequest bodyRequest:{}", request.getSentence());
+        String url = "http://wiirlak.dynamic-dns.net:2000/analyze";
+        // create headers
+        HttpHeaders headers = new HttpHeaders();
+        // set `content-type` header
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        // set `accept` header
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        // create a post object
+        Request savedRequest = requestService.create(request);
+        // build the request
+        HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        // check response status code
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return response.getBody();
+        } else {
+            return null;
+        }
     }
 
     @PutMapping("/{id}")
@@ -87,47 +97,4 @@ public class RequestController {
         logger.info("< deleteRequest id:{}", id);
         return new ResponseEntity<Request>(HttpStatus.NO_CONTENT);
     }
-
-//    @PostMapping("/{id}/send")
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    public ResponseEntity<Request> sendRequest(@PathVariable("id") Long id, @RequestParam(value = "wait", defaultValue = "false") boolean waitForAsyncResult) {
-//
-//        logger.info("> sendRequest id:{}", id);
-//
-//        Request request = null;
-//
-//        try {
-//            request = requestService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Client not found for this id : " + id));
-//            if (request == null) {
-//                logger.info("< sendRequest id:{}", id);
-//                return new ResponseEntity<Request>(HttpStatus.NOT_FOUND);
-//            }
-//
-//            if (waitForAsyncResult) {
-//                Future<Boolean> asyncResponse = requestService
-//                        .sendAsyncWithResult(request);
-//                boolean RequestSent = asyncResponse.get();
-//                logger.info("- request client lourd sent? {}", RequestSent);
-//            } else {
-//                requestService.sendAsync(request);
-//            }
-//        } catch (Exception e) {
-//            logger.error("A problem occurred sending the Request.", e);
-//            return new ResponseEntity<Request>(
-//                    HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//        logger.info("< sendRequest id:{}", id);
-//        return new ResponseEntity<Request>(request, HttpStatus.OK);
-//    }
-
-    @PostMapping("/send")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String sendRequest(Request request) {
-        ResponseEntity<Request> savedRequest= createRequest(request);
-        String url = "wiirlak.dynamic-dns.net:2000/analyze";
-        ResponseEntity<Request> responseEntity = restTemplate.exchange(url, HttpMethod.POST, savedRequest, Request.class);
-        return responseEntity.toString();
-    }
-
 }
