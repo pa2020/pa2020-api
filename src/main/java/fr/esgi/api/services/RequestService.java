@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Future;
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -20,21 +19,6 @@ import java.util.concurrent.Future;
 @RequiredArgsConstructor
 public class RequestService implements IRequestService{
     private final RequestDto requestDto;
-
-    @Override
-    public Boolean send(Request request) {
-        return requestDto.send(request);
-    }
-
-    @Override
-    public void sendAsync(Request request) {
-        requestDto.sendAsync(request);
-    }
-
-    @Override
-    public Future<Boolean> sendAsyncWithResult(Request request) {
-        return requestDto.sendAsyncWithResult(request);
-    }
 
     @Override
     @Transactional(readOnly = true)
