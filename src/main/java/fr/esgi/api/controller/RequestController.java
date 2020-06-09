@@ -1,5 +1,6 @@
 package fr.esgi.api.controller;
 
+import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.IRequestService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -39,12 +41,12 @@ public class RequestController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Request> getGreeting(@PathVariable("id") Long id) {
         logger.info("> getRequest id:{}", id);
-        Request request = requestService.findById(id).get();
-        if (request == null) {
-            return new ResponseEntity<Request>(HttpStatus.NOT_FOUND);
+        Optional<Request> request = requestService.findById(id);
+        if (request.isEmpty()) {
+            throw new ResourceNotFoundException("Request "+ id +" not found!");
         }
         logger.info("< getRequest id:{}", id);
-        return new ResponseEntity<Request>(request, HttpStatus.OK);
+        return new ResponseEntity<Request>(request.get(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,16 +61,20 @@ public class RequestController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         // set `accept` header
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        // create a post object
+        // create a post object'[
         Request savedRequest = requestService.create(request);
-        // build the request
-        HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-        // check response status code
-        if (response.getStatusCode() == HttpStatus.CREATED) {
-            return response.getBody();
-        } else {
-            return null;
+        if (savedRequest.getSentence() == null){
+            throw new ResourceNotFoundException("Your sentence is empty");
+        }else {
+            // build the request
+            HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+            // check response status code
+            if (response.getStatusCode() == HttpStatus.OK) {
+                return response.getBody();
+            } else {
+                throw new ResourceNotFoundException("Request i'not send to client lourd!");
+            }
         }
     }
 
@@ -76,13 +82,11 @@ public class RequestController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Request> updateRequest(@RequestBody Request request) {
         logger.info("> updateRequest id:{}", request.getRequest_id());
-
         Request updateRequest = requestService.update(request);
         if (updateRequest == null) {
             return new ResponseEntity<Request>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
         logger.info("< updateRequest id:{}", request.getRequest_id());
         return new ResponseEntity<Request>(updateRequest, HttpStatus.OK);
     }
