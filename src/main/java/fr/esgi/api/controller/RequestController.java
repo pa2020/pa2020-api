@@ -2,6 +2,7 @@ package fr.esgi.api.controller;
 
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
+import fr.esgi.api.models.user.User;
 import fr.esgi.api.services.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class RequestController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Request> getGreeting(@PathVariable("id") Long id) {
+    public ResponseEntity<Request> getRequestById(@PathVariable("id") Long id) {
         logger.info("> getRequest id:{}", id);
         Optional<Request> request = requestService.findById(id);
         if (request.isEmpty()) {
@@ -47,6 +48,12 @@ public class RequestController {
         }
         logger.info("< getRequest id:{}", id);
         return new ResponseEntity<Request>(request.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public List<Request> getRequestByUser_Id(@RequestParam(required=false) Long id){
+        return requestService.findRequestByUser_Id(id);
     }
 
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

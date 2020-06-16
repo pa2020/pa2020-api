@@ -1,7 +1,9 @@
 package fr.esgi.api.dto.request;
 
 import fr.esgi.api.models.request.Request;
+import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
+import fr.esgi.api.repositories.user.UserRepository;
 import lombok.*;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RequestDto implements IRequestDto{
     private final RequestRepository requestRepository;
+    private final UserRepository userRepository;
+
 
     /**
      * The Logger for this class.
@@ -34,6 +38,16 @@ public class RequestDto implements IRequestDto{
     public Optional<Request> findById(Long id) {
         Optional<Request> request = requestRepository.findById(id);
         return request;
+    }
+
+    @Override
+    public List<Request> findByUser_Id(Long id) {
+        Optional<User> search = Optional.of(userRepository.findById(id)).get();
+        if (search.isPresent()) {
+            return requestRepository.listRequestByUser_id(id);
+        }else{
+            throw new RuntimeException("Request User_id Introuvable!");
+        }
     }
 
     @Override

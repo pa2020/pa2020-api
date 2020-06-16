@@ -36,6 +36,6 @@ public class AnalyzeRequest implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "requests_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonBackReference("requests")
     private Request requests;
 }
