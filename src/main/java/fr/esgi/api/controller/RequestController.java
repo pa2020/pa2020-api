@@ -71,6 +71,7 @@ public class RequestController {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
             // check response status code
             if (response.getStatusCode() == HttpStatus.OK) {
+                //todo
                 return response.getBody();
             } else {
                 throw new ResourceNotFoundException("Request i'not send to client lourd!");
