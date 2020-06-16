@@ -27,6 +27,7 @@ public class Request implements Serializable {
     private String sentence;
     private String state;
     private Date created_time;
+    private Date created_time_update;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
