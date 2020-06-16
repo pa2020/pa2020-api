@@ -23,14 +23,16 @@ public class AnalyzeRequestDto implements IAnalyzeRequestDto{
     @Override
     public AnalyzeRequest create(AnalyzeRequest analyzeRequest) {
         Optional<Request> search = Optional.of(requestRepository.findById(analyzeRequest.getRequests().getRequest_id())).get();
+        Optional<AnalyzeRequest> search2 = Optional.of(analyzeRequestRepository.SearchById(analyzeRequest.getRequests().getRequest_id())).get();
         if(analyzeRequest.getAnalyze_r_id() != null) {
             // Cannot create Request with specified ID value
             return null;
+        }else if (search2.isPresent()){
+            throw new RuntimeException("Request_Id already linked for an Analyze_r_id! == > id = "+analyzeRequest.getRequests().getRequest_id());
         }else if (search.isEmpty()){
             throw new RuntimeException("Request Id Introuvable! == > id = "+analyzeRequest.getRequests().getRequest_id());
         }else {
-        AnalyzeRequest savedRequest = analyzeRequestRepository.save(analyzeRequest);
-        return savedRequest;
+            return analyzeRequestRepository.save(analyzeRequest);
         }
     }
 }
