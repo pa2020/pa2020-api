@@ -65,8 +65,7 @@ public class RequestDto implements IRequestDto{
 
         if (search.isPresent()) {
             Request _request = search.get();
-            _request.setCreated_time(request.getCreated_time());
-            _request.setSentence(request.getSentence());
+            _request.setCreated_time_update(request.getCreated_time_update());
             _request.setState(request.getState());
             return requestRepository.save(_request);
         } else {
