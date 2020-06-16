@@ -8,6 +8,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -34,8 +36,7 @@ public class Request implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User user;
 
-    @OneToOne
-    @JoinColumn(name = "analyze_request_id")
-    @JsonBackReference
-    private AnalyzeRequest analyzeRequests;
+    @OneToOne(mappedBy = "requests", fetch = FetchType.LAZY)
+    @JsonBackReference("AnalyzeRequest")
+    private AnalyzeRequest AnalyzeRequest;
 }

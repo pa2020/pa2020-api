@@ -1,10 +1,7 @@
-package fr.esgi.api.dto.request;
+package fr.esgi.api.services;
 
 import fr.esgi.api.models.request.AnalyzeRequest;
 
-/**
- * Created by Zakaria FAHRAOUI.
- */
-public interface IAnalyzeRequestDto {
+public interface IAnalyzeRequestService {
     AnalyzeRequest create(AnalyzeRequest analyzeRequest);
 }

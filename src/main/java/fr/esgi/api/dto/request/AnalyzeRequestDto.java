@@ -1,35 +1,36 @@
 package fr.esgi.api.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.esgi.api.models.request.AnalyzeRequest;
 import fr.esgi.api.models.request.Request;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.Accessors;
+import fr.esgi.api.repositories.request.AnalyzeRequestRepository;
+import fr.esgi.api.repositories.request.RequestRepository;
+import lombok.*;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Created by Zakaria FAHRAOUI.
  */
 
-@Getter
-@Setter
-@Accessors(chain = true)
-@NoArgsConstructor
-@ToString
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class AnalyzeRequestDto {
-    private Long analyze_r_id;
+@Component
+@RequiredArgsConstructor
+public class AnalyzeRequestDto implements IAnalyzeRequestDto{
+    private final AnalyzeRequestRepository analyzeRequestRepository;
+    private final RequestRepository requestRepository;
 
-    private Long positive_comment;
 
-    private Long negative_comment;
-
-    private Long neutral_comment;
-
-    private Long unanalyzed;
-
-    private Request requests;
+    @Override
+    public AnalyzeRequest create(AnalyzeRequest analyzeRequest) {
+        Optional<Request> search = Optional.of(requestRepository.findById(analyzeRequest.getRequests().getRequest_id())).get();
+        if(analyzeRequest.getAnalyze_r_id() != null) {
+            // Cannot create Request with specified ID value
+            return null;
+        }else if (search.isEmpty()){
+            throw new RuntimeException("Request Id Introuvable! == > id = "+analyzeRequest.getRequests().getRequest_id());
+        }else {
+        AnalyzeRequest savedRequest = analyzeRequestRepository.save(analyzeRequest);
+        return savedRequest;
+        }
+    }
 }

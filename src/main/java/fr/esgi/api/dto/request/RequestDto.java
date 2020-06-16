@@ -1,7 +1,6 @@
 package fr.esgi.api.dto.request;
 
 import fr.esgi.api.models.request.Request;
-import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
 import lombok.*;
 import org.springframework.stereotype.Component;

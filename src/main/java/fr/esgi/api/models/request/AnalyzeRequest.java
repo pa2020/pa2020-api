@@ -1,6 +1,7 @@
 package fr.esgi.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,7 +36,7 @@ public class AnalyzeRequest implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "requests_id")
-    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Request requests;
 
 }
