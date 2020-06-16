@@ -1,6 +1,7 @@
 package fr.esgi.api.dto.request;
 
 import fr.esgi.api.models.request.Request;
+import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -52,20 +53,25 @@ public class RequestDto implements IRequestDto{
         return savedRequest;
     }
 
+    /**
+     * Update User Profile
+     *
+     * @param request
+     * @return
+     */
     @Override
-    public Request update(Request request) {
+    public Request update(Request request, Long id) {
+        Optional<Request> search = Optional.of(requestRepository.findById(id)).get();
 
-        // Ensure the entity object to be updated exists in the repository to
-        // prevent the default behavior of save() which will persist a new
-        // entity if the entity matching the id does not exist
-        Request requestToUpdate = findById(request.getRequest_id()).get();
-        if (requestToUpdate == null) {
-            // Cannot update Request that hasn't been persisted
-            return null;
+        if (search.isPresent()) {
+            Request _request = search.get();
+            _request.setCreated_time(request.getCreated_time());
+            _request.setSentence(request.getSentence());
+            _request.setState(request.getState());
+            return requestRepository.save(_request);
+        } else {
+            throw new RuntimeException("Request Id Introuvable!");
         }
-        requestToUpdate.setSentence(request.getSentence());
-        Request updatedRequest = requestRepository.save(requestToUpdate);
-        return updatedRequest;
     }
 
     @Override
