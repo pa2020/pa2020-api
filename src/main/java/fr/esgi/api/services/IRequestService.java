@@ -13,7 +13,7 @@ public interface IRequestService {
 
     Request create(Request request);
 
-    Request update(Request request);
+    Request update(Request request, Long id);
 
     void delete(Long id);
 

@@ -44,8 +44,8 @@ public class RequestService implements IRequestService{
     @Transactional(
             propagation = Propagation.REQUIRED,
             readOnly = false)
-    public Request update(Request request) {
-        return requestDto.update(request);
+    public Request update(Request request, Long id) {
+        return requestDto.update(request, id);
     }
 
     @Override

@@ -71,7 +71,7 @@ public class RequestController {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
             // check response status code
             if (response.getStatusCode() == HttpStatus.OK) {
-                //todo
+                //updateRequest(request,id);
                 return response.getBody();
             } else {
                 throw new ResourceNotFoundException("Request i'not send to client lourd!");
@@ -81,9 +81,9 @@ public class RequestController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Request> updateRequest(@RequestBody Request request) {
+    public ResponseEntity<Request> updateRequest(@RequestBody Request request, @PathVariable Long id) {
         logger.info("> updateRequest id:{}", request.getRequest_id());
-        Request updateRequest = requestService.update(request);
+        Request updateRequest = requestService.update(request, id);
         if (updateRequest == null) {
             return new ResponseEntity<Request>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
