@@ -61,7 +61,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // configure access rules
                 .antMatchers(HttpMethod.GET,"/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/v1/auth/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/v1/requests/**","/api/v1/users/**").hasIpAddress("wiirlak.dynamic-dns.net:2000")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
