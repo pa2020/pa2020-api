@@ -8,6 +8,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -15,7 +17,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "requests")
 public class Request implements Serializable {
@@ -24,9 +26,15 @@ public class Request implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long request_id;
+    @NonNull
     private String sentence;
-    private String state;
+    @NonNull
     private Date created_time;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinTable(name = "request_state", joinColumns = @JoinColumn(name = "request_id"), inverseJoinColumns = @JoinColumn(name = "state_id"))
+    private Set<State> states = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
