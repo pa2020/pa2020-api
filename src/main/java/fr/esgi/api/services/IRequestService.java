@@ -11,6 +11,8 @@ public interface IRequestService {
 
     Optional<Request> findById(Long id);
 
+    List<Request> findRequestByUser_Id(Long id);
+
     Request create(Request request);
 
     Request update(Request request, Long id);

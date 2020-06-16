@@ -33,6 +33,12 @@ public class RequestService implements IRequestService{
     }
 
     @Override
+    @Transactional
+    public List<Request> findRequestByUser_Id(Long id) {
+        return requestDto.findByUser_Id(id);
+    }
+
+    @Override
     @Transactional(
             propagation = Propagation.REQUIRED,
             readOnly = false)
