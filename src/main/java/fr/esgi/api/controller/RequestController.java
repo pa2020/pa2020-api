@@ -2,7 +2,6 @@ package fr.esgi.api.controller;
 
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
-import fr.esgi.api.models.user.User;
 import fr.esgi.api.services.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -78,7 +77,6 @@ public class RequestController {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
             // check response status code
             if (response.getStatusCode() == HttpStatus.OK) {
-                //updateRequest(request,id);
                 return response.getBody();
             } else {
                 throw new ResourceNotFoundException("Request i'not send to client lourd!");

@@ -26,13 +26,13 @@ public class AnalyzeRequest implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long analyze_r_id;
     @NonNull
-    private Long positive_comment;
+    private Double positive;
     @NonNull
-    private Long negative_comment;
+    private Double negative;
     @NonNull
-    private Long neutral_comment;
+    private Double neutral;
     @NonNull
-    private Long unanalyzed;
+    private Double unanalyzed;
 
     @OneToOne
     @JoinColumn(name = "requests_id")
