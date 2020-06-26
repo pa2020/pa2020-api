@@ -34,6 +34,7 @@ public class AnalyzeRequest implements Serializable {
     @NonNull
     private Double unanalyzed;
 
+
     @OneToOne
     @JoinColumn(name = "requests_id")
     @JsonBackReference("requests")
