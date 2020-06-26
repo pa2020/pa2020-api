@@ -53,17 +53,17 @@ public class RequestDto implements IRequestDto{
     @Override
     public Request create(Request request) {
 
-        // Ensure the entity object to be created does NOT exist in the
-        // repository. Prevent the default behavior of save() which will update
-        // an existing entity if the entity matching the supplied id exists.
-        if (request.getRequest_id() != null) {
-            // Cannot create Request with specified ID value
-            return null;
+        Optional<User> search = Optional.of(userRepository.findById(request.getUser().getUser_id())).get();
+
+        if (search.isPresent()) {
+            request.setRequest_id(request.getRequest_id());
+            request.setCreated_time(request.getCreated_time());
+            request.setState(request.getState());
+            request.setUser(request.getUser());
+            return requestRepository.save(request);
+        } else {
+            throw new RuntimeException("Request User_Id Introuvable!");
         }
-
-        Request savedRequest = requestRepository.save(request);
-
-        return savedRequest;
     }
 
     /**
