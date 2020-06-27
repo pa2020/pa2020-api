@@ -25,9 +25,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class RequestController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final IRequestService requestService;
     private final RestTemplate restTemplate;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -43,7 +43,7 @@ public class RequestController {
         logger.info("> getRequest id:{}", id);
         Optional<Request> request = requestService.findById(id);
         if (request.isEmpty()) {
-            throw new ResourceNotFoundException("Request "+ id +" not found!");
+            throw new ResourceNotFoundException("Request " + id + " not found!");
         }
         logger.info("< getRequest id:{}", id);
         return new ResponseEntity<Request>(request.get(), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class RequestController {
 
     @GetMapping("/user")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<Request> getRequestByUser_Id(@RequestParam(required=false) Long id){
+    public List<Request> getRequestByUser_Id(@RequestParam(required = false) Long id) {
         return requestService.findRequestByUser_Id(id);
     }
 
@@ -69,9 +69,9 @@ public class RequestController {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         // create a post object'[
         Request savedRequest = requestService.create(request);
-        if (savedRequest.getSentence() == null){
+        if (savedRequest.getSentence() == null) {
             throw new ResourceNotFoundException("Your sentence is empty");
-        }else {
+        } else {
             // build the request
             HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);

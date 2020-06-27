@@ -1,7 +1,6 @@
 package fr.esgi.api.services;
 
 import fr.esgi.api.dto.request.AnalyzeRequestDto;
-import fr.esgi.api.dto.request.RequestDto;
 import fr.esgi.api.models.request.AnalyzeRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class AnalyzeRequestService implements IAnalyzeRequestService{
+public class AnalyzeRequestService implements IAnalyzeRequestService {
     private final AnalyzeRequestDto analyzeRequestDto;
 
     @Override

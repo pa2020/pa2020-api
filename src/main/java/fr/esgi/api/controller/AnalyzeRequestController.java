@@ -19,9 +19,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class AnalyzeRequestController {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final IAnalyzeRequestService analyzeRequestService;
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

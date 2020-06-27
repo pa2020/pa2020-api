@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface AnalyzeRequestRepository extends JpaRepository<AnalyzeRequest,Long> {
+public interface AnalyzeRequestRepository extends JpaRepository<AnalyzeRequest, Long> {
     @Query("select a from AnalyzeRequest a where a.requests.request_id=:id")
     Optional<AnalyzeRequest> SearchById(@Param("id") Long id);
 

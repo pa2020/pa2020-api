@@ -4,7 +4,6 @@ package fr.esgi.api.models.user;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import fr.esgi.api.models.request.Request;
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;

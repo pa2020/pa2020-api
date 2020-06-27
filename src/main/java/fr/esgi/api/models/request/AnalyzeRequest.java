@@ -1,13 +1,10 @@
 package fr.esgi.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -26,13 +23,13 @@ public class AnalyzeRequest implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long analyze_r_id;
     @NonNull
-    private Double positive;
+    private float positive;
     @NonNull
-    private Double negative;
+    private float negative;
     @NonNull
-    private Double neutral;
+    private float neutral;
     @NonNull
-    private Double unanalyzed;
+    private float unanalyzed;
 
 
     @OneToOne

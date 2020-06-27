@@ -4,10 +4,11 @@ import fr.esgi.api.models.request.Request;
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
 import fr.esgi.api.repositories.user.UserRepository;
-import lombok.*;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class RequestDto implements IRequestDto{
+public class RequestDto implements IRequestDto {
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
 
@@ -45,7 +46,7 @@ public class RequestDto implements IRequestDto{
         Optional<User> search = Optional.of(userRepository.findById(id)).get();
         if (search.isPresent()) {
             return requestRepository.listRequestByUser_id(id);
-        }else{
+        } else {
             throw new RuntimeException("Request User_id Introuvable!");
         }
     }

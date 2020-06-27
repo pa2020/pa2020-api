@@ -25,25 +25,25 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public List<User> get(){
+    public List<User> get() {
         return userService.getUser();
     }
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public User getId(@PathVariable("userId") Long userId){
+    public User getId(@PathVariable("userId") Long userId) {
         return userService.getUserById(userId);
     }
 
     @GetMapping("/filter")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public User getUsername(@RequestParam(required=false) String name){
+    public User getUsername(@RequestParam(required = false) String name) {
         return userService.getUserByUsername(name);
     }
 
     @PutMapping("/{userId}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<User> updateProfile(@RequestBody @Valid User user, @PathVariable Long userId){
+    public ResponseEntity<User> updateProfile(@RequestBody @Valid User user, @PathVariable Long userId) {
         return new ResponseEntity<>(userService.updateUser(user, userId), HttpStatus.OK);
     }
 }

@@ -2,7 +2,7 @@ package fr.esgi.api.dto.user;
 
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.user.UserRepository;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserDto implements IUserDto{
+public class UserDto implements IUserDto {
 
     private final UserRepository userRepository;
 
@@ -37,10 +37,10 @@ public class UserDto implements IUserDto{
     @Override
     public User getUserById(long id) {
         Optional<User> user = Optional.of(userRepository.findById(id)).get();
-        if (user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
-        }else
-        throw new RuntimeException("Id client Introuvable!");
+        } else
+            throw new RuntimeException("Id client Introuvable!");
     }
 
     /**

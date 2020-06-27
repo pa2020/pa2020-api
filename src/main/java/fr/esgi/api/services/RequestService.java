@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class RequestService implements IRequestService{
+public class RequestService implements IRequestService {
     private final RequestDto requestDto;
 
     @Override

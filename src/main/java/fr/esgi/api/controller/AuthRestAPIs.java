@@ -77,11 +77,11 @@ public class AuthRestAPIs {
         Set<Role> roles = new HashSet<>();
 
         strRoles.forEach(role -> {
-            if(role.equals("admin")) {
+            if (role.equals("admin")) {
                 Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
                 roles.add(adminRole);
-            }else {
+            } else {
                 Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Fail! -> Cause: User Role not find."));
                 roles.add(userRole);
