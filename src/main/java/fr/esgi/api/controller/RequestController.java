@@ -2,7 +2,7 @@ package fr.esgi.api.controller;
 
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
-import fr.esgi.api.services.IRequestService;
+import fr.esgi.api.services.request.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +69,7 @@ public class RequestController {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         // create a post object'[
         Request savedRequest = requestService.create(request);
-        if (savedRequest.getSentence() == null) {
+        if (request.getSentence().isEmpty() || request.getSentence() == null) {
             throw new ResourceNotFoundException("Your sentence is empty");
         } else {
             // build the request

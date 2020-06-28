@@ -1,4 +1,4 @@
-package fr.esgi.api.services;
+package fr.esgi.api.services.user;
 
 import fr.esgi.api.dto.user.UserDto;
 import fr.esgi.api.models.user.User;

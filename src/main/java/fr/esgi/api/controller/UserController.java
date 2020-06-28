@@ -2,7 +2,7 @@ package fr.esgi.api.controller;
 
 
 import fr.esgi.api.models.user.User;
-import fr.esgi.api.services.IUserService;
+import fr.esgi.api.services.user.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

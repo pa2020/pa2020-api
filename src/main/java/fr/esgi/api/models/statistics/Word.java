@@ -1,5 +1,6 @@
 package fr.esgi.api.models.statistics;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,13 @@ public class Word implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String word;
-    private Long occurence;
+    @GeneratedValue
+    private int occurence = 1;
+
+    @ManyToOne
+    @JoinColumn(name = "stats_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Stats stats;
 
 
 }

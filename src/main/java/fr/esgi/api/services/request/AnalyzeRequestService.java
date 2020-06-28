@@ -1,4 +1,4 @@
-package fr.esgi.api.services;
+package fr.esgi.api.services.request;
 
 import fr.esgi.api.dto.request.AnalyzeRequestDto;
 import fr.esgi.api.models.request.AnalyzeRequest;

@@ -2,7 +2,7 @@ package fr.esgi.api.controller;
 
 
 import fr.esgi.api.models.request.AnalyzeRequest;
-import fr.esgi.api.services.IAnalyzeRequestService;
+import fr.esgi.api.services.request.IAnalyzeRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
