@@ -44,10 +44,10 @@ public class WordDto implements IWordDto {
     public Word create(Word word) {
         Word search = wordRepository.findByWordIsLike(word.getWord());
         if (wordRepository.existsByWord(word.getWord())) {
-                Word wordSave = search;
-                int occurence = search.getOccurence()+1;
-                wordSave.setOccurence(occurence++);
-                return wordRepository.save(wordSave);
+            Word wordSave = search;
+            int occurence = search.getOccurence() + 1;
+            wordSave.setOccurence(occurence++);
+            return wordRepository.save(wordSave);
         } else {
             return wordRepository.save(word);
         }

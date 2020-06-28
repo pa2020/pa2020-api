@@ -17,9 +17,7 @@ public class AnalyzeRequestService implements IAnalyzeRequestService {
     private final AnalyzeRequestDto analyzeRequestDto;
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED)
     public AnalyzeRequest create(AnalyzeRequest analyzeRequest) {
         return analyzeRequestDto.create(analyzeRequest);
     }

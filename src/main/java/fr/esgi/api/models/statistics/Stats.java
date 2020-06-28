@@ -1,6 +1,6 @@
 package fr.esgi.api.models.statistics;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Zakaria FAHRAOUI.
@@ -35,7 +33,8 @@ public class Stats implements Serializable {
     private double neutral_comment;
     private Date created_time;
 
-    @OneToMany(mappedBy = "stats", fetch = FetchType.LAZY)
-    @JsonBackReference("words")
-    private Set<Word> words = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "words_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Word words;
 }

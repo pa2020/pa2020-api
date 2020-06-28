@@ -1,6 +1,6 @@
 package fr.esgi.api.models.statistics;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -31,10 +33,8 @@ public class Word implements Serializable {
     @GeneratedValue
     private int occurence = 1;
 
-    @ManyToOne
-    @JoinColumn(name = "stats_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Stats stats;
-
+    @OneToMany(mappedBy = "words", fetch = FetchType.LAZY)
+    @JsonBackReference("stats")
+    private Set<Stats> stats = new HashSet<>();
 
 }

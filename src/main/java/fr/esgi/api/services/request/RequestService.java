@@ -39,25 +39,19 @@ public class RequestService implements IRequestService {
     }
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED)
     public Request create(Request request) {
         return requestDto.create(request);
     }
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED)
     public Request update(Request request, Long id) {
         return requestDto.update(request, id);
     }
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRED)
     public void delete(Long id) {
         requestDto.delete(id);
     }
