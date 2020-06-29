@@ -23,13 +23,13 @@ public class AnalyzeRequest implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long analyze_r_id;
     @NonNull
-    private float positive;
+    private double positive;
     @NonNull
-    private float negative;
+    private double negative;
     @NonNull
-    private float neutral;
+    private double neutral;
     @NonNull
-    private float unanalyzed;
+    private double unanalyzed;
 
 
     @OneToOne

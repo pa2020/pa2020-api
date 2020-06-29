@@ -36,7 +36,7 @@ public class StatsController {
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Stats> createStats(@RequestBody Stats stats) {
         logger.info("< log bodyStats:{}", stats.getId());
         Optional<Stats> createStats = Optional.ofNullable(statsService.create(stats));

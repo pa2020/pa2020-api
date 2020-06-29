@@ -64,33 +64,3 @@ public class WordController {
         }
     }
 }
-
-//
-//    @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public String sendWord(@RequestBody Word word) {
-//        logger.info("< sendRequest bodyWord:{}", word.getWord());
-//        String url = "http://wiirlak.dynamic-dns.net:2000/analyze";
-//        // create headers
-//        HttpHeaders headers = new HttpHeaders();
-//        // set `content-type` header
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        // set `accept` header
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        // create a post object'[
-//        Word savedWord = wordService.create(word);
-//        if (word.getWord().isEmpty() || word.getWord() == null) {
-//            throw new ResourceNotFoundException("Your word is empty");
-//        } else {
-//            // build the request
-//            HttpEntity<Word> entity = new HttpEntity<>(savedWord, headers);
-//            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-//            // check response status code
-//            if (response.getStatusCode() == HttpStatus.OK) {
-//                logger.info("Your word is exists");
-//                return response.getBody();
-//            } else {
-//                throw new ResourceNotFoundException("Word i'not send to client lourd!");
-//            }
-//        }
-//    }
