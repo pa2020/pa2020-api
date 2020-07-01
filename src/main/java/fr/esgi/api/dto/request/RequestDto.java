@@ -1,5 +1,6 @@
 package fr.esgi.api.dto.request;
 
+import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
@@ -89,9 +90,9 @@ public class RequestDto implements IRequestDto {
 
     @Override
     public void delete(Long id) {
-
+        if (id <= 0)
+            throw new ResourceNotFoundException("The given id must not be null!");
         requestRepository.deleteById(id);
-
     }
 
 }

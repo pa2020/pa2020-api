@@ -52,8 +52,9 @@ public class RequestService implements IRequestService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void delete(Long id) {
+    public String delete(Long id) {
         requestDto.delete(id);
+        return "Your request has been deleted";
     }
 
 }

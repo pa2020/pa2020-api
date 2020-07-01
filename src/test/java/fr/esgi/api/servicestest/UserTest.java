@@ -11,8 +11,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class UserTest {
 
@@ -79,4 +82,14 @@ public class UserTest {
         assertThat(user.getUsername()).isEqualTo("zakaria");
     }
 
+    @Test
+    void should_update_profilUser() {
+        User test = new User();
+        test.setUser_id(1L);
+
+        when(userService.updateUser(any(), eq(1L))).thenReturn(test);
+        User user = userService.updateUser(test, test.getUser_id());
+        assertNotNull(user);
+        assertEquals(user, test);
+    }
 }

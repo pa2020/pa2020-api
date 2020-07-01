@@ -17,6 +17,6 @@ public interface IRequestService {
 
     Request update(Request request, Long id);
 
-    void delete(Long id);
+    String delete(Long id);
 
 }

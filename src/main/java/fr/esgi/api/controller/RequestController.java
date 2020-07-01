@@ -99,12 +99,8 @@ public class RequestController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Request> deleteRequest(@PathVariable("id") Long id, @RequestBody Request request) {
-        logger.info("> deleteRequest id:{}", id);
-
+    public ResponseEntity<String> deleteRequest(@PathVariable("id") Long id) {
         requestService.delete(id);
-
-        logger.info("< deleteRequest id:{}", id);
-        return new ResponseEntity<Request>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok().body("Your request has been deleted");
     }
 }
