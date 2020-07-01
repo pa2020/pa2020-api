@@ -1,10 +1,7 @@
 package fr.esgi.api.services.request;
 
 import fr.esgi.api.dto.request.BlackListDto;
-import fr.esgi.api.dto.request.IBlackListDto;
-import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.BlackList;
-import fr.esgi.api.repositories.request.BlackListRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +27,11 @@ public class BlackListService implements IBlackListService {
     @Override
     public List<BlackList> AllBlackList() {
         return blackListDto.findAll();
+    }
+
+    @Override
+    public List<BlackList> SearchBySentence(String word) {
+        return blackListDto.SearchBySentence(word);
     }
 
     @Override

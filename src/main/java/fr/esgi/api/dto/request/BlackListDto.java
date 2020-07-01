@@ -32,6 +32,11 @@ public class BlackListDto implements IBlackListDto {
     }
 
     @Override
+    public List<BlackList> SearchBySentence(String word) {
+        return blackListRepository.listOfSentence(word);
+    }
+
+    @Override
     public BlackList create(BlackList blackList) {
         return blackListRepository.save(blackList);
     }

@@ -11,6 +11,8 @@ import java.util.List;
 public interface IBlackListService {
     List<BlackList> AllBlackList();
 
+    List<BlackList> SearchBySentence(String word);
+
     BlackList addBlackListSentence(BlackList blackList);
 
     void deleteBlackList(Long id);

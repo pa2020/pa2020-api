@@ -10,6 +10,8 @@ import java.util.List;
 public interface IBlackListDto {
     List<BlackList> findAll();
 
+    List<BlackList> SearchBySentence(String word);
+
     BlackList create(BlackList blackList);
 
     void delete(Long id);
