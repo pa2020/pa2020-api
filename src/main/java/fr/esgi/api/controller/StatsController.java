@@ -26,7 +26,7 @@ import java.util.Optional;
 public class StatsController {
 
     private final IStatsService statsService;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @GetMapping

@@ -1,4 +1,4 @@
-package fr.esgi.api.servicestest;
+package fr.esgi.api.servicestest.usertest;
 
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.user.UserRepository;

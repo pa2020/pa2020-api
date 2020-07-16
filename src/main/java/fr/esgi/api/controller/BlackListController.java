@@ -24,7 +24,7 @@ public class BlackListController {
 
     private final IBlackListService blackListService;
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @GetMapping
@@ -44,10 +44,10 @@ public class BlackListController {
         } else {
             try {
                 List<BlackList> blackList = blackListService.SearchBySentence(word);
-                if (blackList.isEmpty() || blackList == null){
+                if (blackList.isEmpty() || blackList == null) {
                     return new ResponseEntity<List<BlackList>>(HttpStatus.NO_CONTENT);
-                } else{
-                return new ResponseEntity<List<BlackList>>(blackList, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<List<BlackList>>(blackList, HttpStatus.OK);
                 }
             } catch (Exception e) {
                 return new ResponseEntity<List<BlackList>>(HttpStatus.INTERNAL_SERVER_ERROR);

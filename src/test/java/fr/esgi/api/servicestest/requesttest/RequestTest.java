@@ -1,9 +1,7 @@
-package fr.esgi.api.servicestest;
+package fr.esgi.api.servicestest.requesttest;
 
 
 import fr.esgi.api.models.request.Request;
-import fr.esgi.api.repositories.request.RequestRepository;
-import fr.esgi.api.repositories.user.UserRepository;
 import fr.esgi.api.services.request.RequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,15 +17,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class RequestTest {
-
-    protected RequestRepository requestRepository;
-    protected UserRepository userRepository;
     protected RequestService requestService;
 
     @BeforeEach
     protected void setup() {
-        requestRepository = mock(RequestRepository.class);
-        userRepository = mock(UserRepository.class);
         requestService = mock(RequestService.class);
     }
 
@@ -38,7 +31,7 @@ public class RequestTest {
     }
 
     @Test
-    void should_return_AllRequest() {
+    void should_return_All_Request() {
         ArrayList<Request> requests = new ArrayList<>();
         requests.add(new Request());
         requests.add(new Request());
@@ -69,7 +62,7 @@ public class RequestTest {
     }
 
     @Test
-    void should_add_new_request_and_returns_new_request() {
+    void should_create_request_and_returns_request() {
         Request request = new Request();
         request.setSentence("trump");
 

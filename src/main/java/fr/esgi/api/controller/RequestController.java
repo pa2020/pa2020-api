@@ -27,7 +27,7 @@ import java.util.Optional;
 public class RequestController {
     private final IRequestService requestService;
     private final RestTemplate restTemplate;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

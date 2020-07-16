@@ -26,8 +26,7 @@ import java.util.Optional;
 public class WordController {
 
     private final IWordService wordService;
-    //private final RestTemplate restTemplate;
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @GetMapping
