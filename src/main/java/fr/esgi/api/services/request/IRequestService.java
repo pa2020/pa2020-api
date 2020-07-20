@@ -13,7 +13,7 @@ public interface IRequestService {
 
     List<Request> findRequestByUser_Id(Long id);
 
-    Request create(Request request);
+    String create(Request request);
 
     Request update(Request request, Long id);
 

@@ -15,7 +15,7 @@ public interface IRequestDto {
 
     List<Request> findByUser_Id(Long id);
 
-    Request create(Request request);
+    String create(Request request);
 
     Request update(Request request, Long id);
 

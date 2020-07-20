@@ -5,6 +5,7 @@ import fr.esgi.api.models.request.Request;
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
 import fr.esgi.api.repositories.user.UserRepository;
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,16 +54,17 @@ public class RequestDto implements IRequestDto {
     }
 
     @Override
-    public Request create(Request request) {
+    public String create(Request request) {
 
         Optional<User> search = Optional.of(userRepository.findById(request.getUser().getUser_id())).get();
 
         if (search.isPresent()) {
+            Gson gson = new Gson();
             request.setRequest_id(request.getRequest_id());
             request.setCreated_time(request.getCreated_time());
             request.setState(request.getState());
             request.setUser(request.getUser());
-            return requestRepository.save(request);
+            return gson.toJson(requestRepository.save(request));
         } else {
             throw new RuntimeException("Request User_Id Introuvable!");
         }

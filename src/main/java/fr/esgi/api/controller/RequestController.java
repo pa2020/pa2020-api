@@ -1,5 +1,6 @@
 package fr.esgi.api.controller;
 
+import fr.esgi.api.broker.Producer;
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.request.IRequestService;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class RequestController {
     private final IRequestService requestService;
     private final RestTemplate restTemplate;
+    private final Producer producer;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
@@ -60,27 +62,13 @@ public class RequestController {
     public String sendRequest(@RequestBody Request request) {
         //Request savedRequest= requestService.create(request);
         logger.info("< sendRequest bodyRequest:{}", request.getSentence());
-        String url = "http://wiirlak.dynamic-dns.net:2000/analyze";
-        // create headers
-        HttpHeaders headers = new HttpHeaders();
-        // set `content-type` header
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        // set `accept` header
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        // create a post object'[
-        Request savedRequest = requestService.create(request);
         if (request.getSentence().isEmpty() || request.getSentence() == null) {
             throw new ResourceNotFoundException("Your sentence is empty");
         } else {
-            // build the request
-            HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-            // check response status code
-            if (response.getStatusCode() == HttpStatus.OK) {
-                return response.getBody();
-            } else {
-                throw new ResourceNotFoundException("Request i'not send to client lourd!");
-            }
+            // create a post object
+            String requestSend = requestService.create(request);
+            producer.sendMessage(requestSend);
+            return requestSend;
         }
     }
 
@@ -104,3 +92,32 @@ public class RequestController {
         return ResponseEntity.ok().body("Your request has been deleted");
     }
 }
+//
+//    @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//    public String sendRequest(@RequestBody Request request) {
+//        //Request savedRequest= requestService.create(request);
+//        logger.info("< sendRequest bodyRequest:{}", request.getSentence());
+//        String url = "http://wiirlak.dynamic-dns.net:2000/analyze";
+//        // create headers
+//        HttpHeaders headers = new HttpHeaders();
+//        // set `content-type` header
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        // set `accept` header
+//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//        // create a post object'[
+//        Request savedRequest = requestService.create(request);
+//        if (request.getSentence().isEmpty() || request.getSentence() == null) {
+//            throw new ResourceNotFoundException("Your sentence is empty");
+//        } else {
+//            // build the request
+//            HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
+//            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+//            // check response status code
+//            if (response.getStatusCode() == HttpStatus.OK) {
+//                return response.getBody();
+//            } else {
+//                throw new ResourceNotFoundException("Request i'not send to client lourd!");
+//            }
+//        }
+//    }

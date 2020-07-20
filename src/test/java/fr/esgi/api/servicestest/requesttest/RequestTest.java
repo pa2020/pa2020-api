@@ -66,7 +66,7 @@ public class RequestTest {
         Request request = new Request();
         request.setSentence("trump");
 
-        when(requestService.create(any())).thenReturn(request);
+        when(requestService.create(any())).thenReturn(String.valueOf(request));
         assertEquals("trump", request.getSentence());
     }
 

@@ -40,7 +40,7 @@ public class RequestService implements IRequestService {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Request create(Request request) {
+    public String create(Request request) {
         return requestDto.create(request);
     }
 
