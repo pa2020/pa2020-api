@@ -47,7 +47,7 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, true, false, false, null);
+        return new Queue(queueName);
     }
 
     @Bean
