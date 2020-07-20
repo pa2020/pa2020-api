@@ -1,5 +1,6 @@
 package fr.esgi.api.config;
 
+import fr.esgi.api.broker.TaskReceiver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -60,5 +61,9 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
         return BindingBuilder.bind(queue).to(exchange).with(routingkey);
     }
 
+    @Bean
+    public TaskReceiver receiver() {
+        return new TaskReceiver();
+    }
 }
 
