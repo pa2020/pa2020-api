@@ -15,7 +15,7 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 
 @Configuration
 @RequiredArgsConstructor
-public class RabbitMQConfig {
+public class RabbitMQConfig implements RabbitListenerConfigurer {
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
@@ -52,7 +52,7 @@ public class RabbitMQConfig {
 
     @Bean
     DirectExchange exchange() {
-        return new DirectExchange(exchange,true,false,null);
+        return new DirectExchange(exchange, true,false,null);
     }
 
     @Bean
