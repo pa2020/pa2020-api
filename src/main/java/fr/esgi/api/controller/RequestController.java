@@ -1,6 +1,7 @@
 package fr.esgi.api.controller;
 
 import fr.esgi.api.broker.Producer;
+import fr.esgi.api.broker.TaskReceiver;
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.request.IRequestService;
@@ -29,6 +30,7 @@ public class RequestController {
     private final IRequestService requestService;
     private final RestTemplate restTemplate;
     private final Producer producer;
+    private final TaskReceiver taskReceiver;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
@@ -56,6 +58,13 @@ public class RequestController {
     public List<Request> getRequestByUser_Id(@RequestParam(required = false) Long id) {
         return requestService.findRequestByUser_Id(id);
     }
+
+//    @GetMapping
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//    public String getRequestNoConsumer() {
+//        sendRequest();
+//        return ;
+//    }
 
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")

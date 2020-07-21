@@ -2,10 +2,7 @@ package fr.esgi.api.config;
 
 import fr.esgi.api.broker.TaskReceiver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,7 +39,7 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     }
 
     @Override
-    public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
+    public void configureRabbitListeners(final RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(myHandlerMethodFactory());
     }
 
@@ -52,12 +49,12 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     }
 
     @Bean
-    DirectExchange exchange() {
-        return new DirectExchange(exchange, true,false,null);
+    TopicExchange exchange() {
+        return new TopicExchange(exchange, true,false,null);
     }
 
     @Bean
-    Binding binding(final Queue queue, final DirectExchange exchange) {
+    Binding binding(final Queue queue, final TopicExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(routingkey);
     }
 
