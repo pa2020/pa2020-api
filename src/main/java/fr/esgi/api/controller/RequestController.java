@@ -1,19 +1,19 @@
 package fr.esgi.api.controller;
 
 import fr.esgi.api.broker.Producer;
-import fr.esgi.api.broker.TaskReceiver;
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.request.IRequestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +30,7 @@ public class RequestController {
     private final IRequestService requestService;
     private final RestTemplate restTemplate;
     private final Producer producer;
-    private final TaskReceiver taskReceiver;
+    //    private final TaskReceiver taskReceiver;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping

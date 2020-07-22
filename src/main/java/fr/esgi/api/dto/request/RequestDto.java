@@ -1,11 +1,11 @@
 package fr.esgi.api.dto.request;
 
+import com.google.gson.Gson;
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.request.RequestRepository;
 import fr.esgi.api.repositories.user.UserRepository;
-import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
