@@ -23,14 +23,14 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     @Value("${rabbitmq.queue}")
     private String queueName;
 
-    @Value("${rabbitmq.deadLetter.queue}")
-    private String deadLetterQueue;
-
-    @Value("${rabbitmq.deadLetterKey}")
-    private String deadLetter;
-
-    @Value("${rabbitmq.dlqExchange}")
-    private String deadLetterExchange;
+//    @Value("${rabbitmq.deadLetter.queue}")
+//    private String deadLetterQueue;
+//
+//    @Value("${rabbitmq.deadLetterKey}")
+//    private String deadLetter;
+//
+//    @Value("${rabbitmq.dlqExchange}")
+//    private String deadLetterExchange;
 
     @Bean
     public MappingJackson2MessageConverter jackson2Converter() {
@@ -50,20 +50,25 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
         registrar.setMessageHandlerMethodFactory(myHandlerMethodFactory());
     }
 
-    @Bean
-    Queue dlq() {
-        return QueueBuilder.durable(deadLetterQueue).build();
-    }
+//    @Bean
+//    Queue dlq() {
+//        return QueueBuilder.durable(deadLetterQueue).build();
+//    }
+//
+//    @Bean
+//    Queue queue() {
+//        return QueueBuilder.durable(queueName).withArgument("x-dead-letter-exchange", deadLetterExchange)
+//                .withArgument("x-dead-letter-routing-key", deadLetter).build();
+//    }
+//
+//    @Bean
+//    DirectExchange deadLetterExchange() {
+//        return new DirectExchange(deadLetterExchange);
+//    }
 
     @Bean
     Queue queue() {
-        return QueueBuilder.durable(queueName).withArgument("x-dead-letter-exchange", deadLetterExchange)
-                .withArgument("x-dead-letter-routing-key", deadLetter).build();
-    }
-
-    @Bean
-    DirectExchange deadLetterExchange() {
-        return new DirectExchange(deadLetterExchange);
+        return new Queue(queueName, true, false, false, null);
     }
 
     @Bean
@@ -71,10 +76,10 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
         return new DirectExchange(exchange, true, false, null);
     }
 
-    @Bean
-    Binding DLQbinding() {
-        return BindingBuilder.bind(dlq()).to(deadLetterExchange()).with(deadLetter);
-    }
+//    @Bean
+//    Binding DLQbinding() {
+//        return BindingBuilder.bind(dlq()).to(deadLetterExchange()).with(deadLetter);
+//    }
 
     @Bean
     Binding binding() {
