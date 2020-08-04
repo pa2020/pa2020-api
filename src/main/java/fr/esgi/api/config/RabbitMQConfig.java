@@ -1,7 +1,10 @@
 package fr.esgi.api.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,9 +89,16 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
         return BindingBuilder.bind(queue()).to(exchange()).with(routingkey);
     }
 
+
 //    @Bean
-//    public TaskReceiver receiver() {
-//        return new TaskReceiver();
+//    public SimpleMessageListenerContainer listenerContainer(TaskReceiver taskReceiver) {
+//        SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
+//        listenerContainer.setQueueNames(queueName);
+//        listenerContainer.setMessageListener(taskReceiver);
+//        listenerContainer.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+//        listenerContainer.setConcurrency("4");
+//        listenerContainer.setPrefetchCount(20);
+//        return listenerContainer;
 //    }
 }
 
