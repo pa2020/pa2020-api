@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class RequestController {
 
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String sendRequest(@RequestBody Request request) {
+    public String sendRequest(@RequestBody Request request) throws IOException {
         //Request savedRequest= requestService.create(request);
         logger.info("< sendRequest bodyRequest:{}", request.getSentence());
         if (request.getSentence().isEmpty() || request.getSentence() == null) {
