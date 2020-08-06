@@ -28,8 +28,7 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
 
     @Bean
     public MappingJackson2MessageConverter jackson2Converter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-        return converter;
+        return new MappingJackson2MessageConverter();
     }
 
     @Bean

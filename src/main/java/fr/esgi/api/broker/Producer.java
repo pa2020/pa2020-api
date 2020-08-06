@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class Producer {
 
-    private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplates;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
@@ -29,7 +29,7 @@ public class Producer {
                 .setContentType(MessageProperties.CONTENT_TYPE_JSON)
                 .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
                 .build();
-        this.rabbitTemplate.convertAndSend(exchange, routingkey, message);
+        this.rabbitTemplates.convertAndSend(exchange, routingkey, message);
         log.info("Send Object = " + message);
     }
 }
