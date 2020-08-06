@@ -58,5 +58,5 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     Binding binding() {
         return BindingBuilder.bind(queue()).to(exchange()).with(routingkey);
     }
-}
 
+}

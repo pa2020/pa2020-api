@@ -20,9 +20,6 @@ public class Producer {
     @Value("${rabbitmq.exchange}")
     private String exchange;
 
-    @Value("${rabbitmq.queue}")
-    private String nameQueue;
-
     @Value("${rabbitmq.routingKey}")
     private String routingkey;
 
@@ -35,5 +32,4 @@ public class Producer {
         this.rabbitTemplate.convertAndSend(exchange, routingkey, message);
         log.info("Send Object = " + message);
     }
-
 }
