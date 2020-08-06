@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class Producer {
 
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
@@ -27,18 +26,12 @@ public class Producer {
     private String routingkey;
 
     public void sendMessage(final String msg) {
-        try {
-            String msgJson = objectMapper.writeValueAsString(msg);
-            Message message = MessageBuilder
-                    .withBody(msgJson.getBytes())
-                    .setContentType(MessageProperties.CONTENT_TYPE_JSON)
-                    .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
-                    .build();
-            //this.rabbitTemplate.convertAndSend(queueName, message);
-            this.rabbitTemplate.convertAndSend(exchange, routingkey, message);
-            log.info("Send Object = " + msg);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        Message message = MessageBuilder
+                .withBody(msg.getBytes())
+                .setContentType(MessageProperties.CONTENT_TYPE_JSON)
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                .build();
+        this.rabbitTemplate.convertAndSend(exchange, routingkey, message);
+        log.info("Send Object = " + message);
     }
 }
