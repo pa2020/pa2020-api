@@ -17,15 +17,14 @@ import java.util.List;
 public class QueueService implements IQueueService {
     private final QueueDto queueDto;
 
-    @Transactional(readOnly = true)
     @Override
-    public String createQueue(Queue queue) {
+    public Queue createQueue(Queue queue) {
         return queueDto.createQueue(queue);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public Queue getQueueByRequestId(Long request_id) {
+    public String getQueueByRequestId(Long request_id) {
         return queueDto.getQueueByRequestId(request_id);
     }
 

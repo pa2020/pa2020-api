@@ -7,9 +7,9 @@ import fr.esgi.api.models.queue.Queue;
  */
 public interface IQueueDto {
 
-    String createQueue(Queue queue);
+    Queue createQueue(Queue queue);
 
-    Queue getQueueByRequestId(Long request_id);
+    String getQueueByRequestId(Long request_id);
 
     void deleteQueueByRequestId(Long request_id);
 }

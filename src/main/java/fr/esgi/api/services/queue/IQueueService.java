@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface IQueueService {
 
-    String createQueue(Queue queue);
+    Queue createQueue(Queue queue);
 
-    Queue getQueueByRequestId(Long request_id);
+    String getQueueByRequestId(Long request_id);
 
     void deleteQueueByRequestId(Long request_id);
 

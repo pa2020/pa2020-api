@@ -23,8 +23,8 @@ public class Queue implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NonNull
-    private Long request_id;
-    private int position;
-    private int total;
+    @Column(name = "request_id")
+    private Long requestId;
 }

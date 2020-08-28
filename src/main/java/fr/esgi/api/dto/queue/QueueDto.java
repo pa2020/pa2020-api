@@ -8,6 +8,7 @@ import fr.esgi.api.models.queue.Queue;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.models.user.User;
 import fr.esgi.api.repositories.queue.QueueRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +26,9 @@ public class QueueDto implements IQueueDto {
     private final QueueRepository QueueRepository;
 
     @Override
-    public String createQueue(Queue queue) {
+    public Queue createQueue(Queue queue) {
         Gson gson = new Gson();
-        return gson.toJson(QueueRepository.save(queue));
+        return QueueRepository.save(queue);
     }
 
     /**
@@ -37,29 +38,27 @@ public class QueueDto implements IQueueDto {
      * @return Queue object
      */
     @Override
-    public Queue getQueueByRequestId(Long request_id) {
+    public String getQueueByRequestId(Long request_id) {
         List<Queue> all_queue = QueueRepository.findAll();
         long min_id;
         if (!all_queue.isEmpty()) {
             min_id = all_queue.stream()
-                    .mapToLong(Queue::getRequest_id)
+                    .mapToLong(Queue::getRequestId)
                     .min()
                     .orElse(0);
         } else
             throw new RuntimeException("File d'attente vide");
 
         Optional<Queue> Queue = Optional.of(all_queue.stream()
-                .filter(queue -> queue.getRequest_id().equals(request_id)))
+                .filter(queue -> queue.getRequestId().equals(request_id)))
                 .get()
                 .findAny();
         if (Queue.isPresent()) {
-            Gson gson = new Gson();
             Queue queue = Queue.get();
-//            String queueJson = gson.toJson(queue);
-//            JsonObject res = gson.fromJson(queueJson, JsonElement.class).getAsJsonObject();
-//            res.add("position", (int) (queue.getId() - min_id));
-//            res.add("total", all_queue.size());
-            return queue;
+            int position = (int) (queue.getId() - min_id);
+            int total = all_queue.size();
+            ExtendedQueue equeue = new ExtendedQueue(queue, position, total);
+            return new Gson().toJson(equeue);
         } else
             throw new RuntimeException("Requête non présente dans la file d'attente");
     }
@@ -74,6 +73,18 @@ public class QueueDto implements IQueueDto {
         if (request_id <= 0)
             throw new ResourceNotFoundException("The given id must not be null!");
         QueueRepository.deleteById(request_id);
+    }
+
+    private class ExtendedQueue {
+        Queue queue;
+        int position;
+        int total;
+
+        public ExtendedQueue(Queue queue, int position, int total) {
+            this.queue = queue;
+            this.position = position;
+            this.total = total;
+        }
     }
 
 }
