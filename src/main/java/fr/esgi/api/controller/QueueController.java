@@ -27,9 +27,9 @@ public class QueueController {
         return new ResponseEntity<>(queueService.createQueue(queue), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user_id")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String getId(@PathVariable("id") Long id) {
+    public String getId(@RequestParam(required = false) Long id) {
         return queueService.getQueueByRequestId(id);
     }
 

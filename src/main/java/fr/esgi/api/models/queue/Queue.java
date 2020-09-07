@@ -1,5 +1,7 @@
 package fr.esgi.api.models.queue;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fr.esgi.api.models.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -27,4 +29,9 @@ public class Queue implements Serializable {
     @NonNull
     @Column(name = "request_id")
     private Long requestId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private User user;
 }

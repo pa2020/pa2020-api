@@ -2,7 +2,6 @@ package fr.esgi.api.models.user;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import fr.esgi.api.models.request.Request;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,10 +36,6 @@ public class User implements Serializable {
     private String username;
     @NonNull
     private String password;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonBackReference("requests")
-    private Set<Request> requests = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonBackReference

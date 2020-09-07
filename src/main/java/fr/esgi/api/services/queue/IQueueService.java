@@ -1,7 +1,6 @@
 package fr.esgi.api.services.queue;
-import fr.esgi.api.models.queue.Queue;
 
-import java.util.List;
+import fr.esgi.api.models.queue.Queue;
 
 /**
  * Created by Alexis DESJARDINS.
