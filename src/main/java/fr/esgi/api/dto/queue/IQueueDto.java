@@ -9,7 +9,7 @@ public interface IQueueDto {
 
     Queue createQueue(Queue queue);
 
-    String getQueueByRequestId(Long request_id);
+    String getQueueByRequestId(Long user_id);
 
     void deleteQueueByRequestId(Long request_id);
 }

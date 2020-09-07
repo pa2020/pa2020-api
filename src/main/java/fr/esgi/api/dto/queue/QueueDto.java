@@ -41,10 +41,6 @@ public class QueueDto implements IQueueDto {
         if (all_queue.isEmpty()) {
             throw new RuntimeException("File d'attente vide");
         }
-        Optional<Queue> allQueue = Optional.of(queueListByUser.stream()
-                .filter(queue -> queue.getUser().getUser_id().equals(user_id)))
-                .get()
-                .findAny();
         List<ExtendedQueue> LQR = new ArrayList<>();
         for (int i = 0; i < all_queue.size(); i++) {
             for (int j = 0; j < queueListByUser.size(); j++) {
@@ -67,9 +63,11 @@ public class QueueDto implements IQueueDto {
      */
     @Override
     public void deleteQueueByRequestId(Long request_id) {
-        if (request_id <= 0)
+        if (request_id <= 0) {
             throw new ResourceNotFoundException("The given id must not be null!");
-        queueRepository.deleteById(request_id);
+        } else {
+            queueRepository.deleteRequestByRequestId(request_id);
+        }
     }
 
     private class ExtendedQueue {
