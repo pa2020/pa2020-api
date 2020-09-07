@@ -1,5 +1,7 @@
 package fr.esgi.api.broker;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class Producer {
 
     private final RabbitTemplate rabbitTemplates;
+    private final ObjectMapper objectMapper;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
@@ -23,9 +26,10 @@ public class Producer {
     @Value("${rabbitmq.routingKey}")
     private String routingkey;
 
-    public void sendMessage(final String msg) {
+    public void sendMessage(final String msg) throws JsonProcessingException {
+        String mapperJson = objectMapper.writeValueAsString(msg);
         Message message = MessageBuilder
-                .withBody(msg.getBytes())
+                .withBody(mapperJson.getBytes())
                 .setContentType(MessageProperties.CONTENT_TYPE_JSON)
                 .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
                 .build();

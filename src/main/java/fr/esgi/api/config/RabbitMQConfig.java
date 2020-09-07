@@ -50,7 +50,7 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
 
     @Bean
     DirectExchange exchange() {
-        return new DirectExchange(exchange, true, false, null);
+        return new DirectExchange(exchange);
     }
 
     @Bean
