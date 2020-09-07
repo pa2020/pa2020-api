@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 public class Producer {
 
     private final RabbitTemplate rabbitTemplates;
-    private final ObjectMapper objectMapper;
 
     @Value("${rabbitmq.exchange}")
     private String exchange;
@@ -26,10 +25,9 @@ public class Producer {
     @Value("${rabbitmq.routingKey}")
     private String routingkey;
 
-    public void sendMessage(final String msg) throws JsonProcessingException {
-        String mapperJson = objectMapper.writeValueAsString(msg);
+    public void sendMessage(final String msg) {
         Message message = MessageBuilder
-                .withBody(mapperJson.getBytes())
+                .withBody(msg.getBytes())
                 .setContentType(MessageProperties.CONTENT_TYPE_JSON)
                 .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
                 .build();

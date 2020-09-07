@@ -26,9 +26,11 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     @Value("${rabbitmq.queue}")
     private String queueName;
 
+
     @Bean
     public MappingJackson2MessageConverter jackson2Converter() {
-        return new MappingJackson2MessageConverter();
+        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        return converter;
     }
 
     @Bean
@@ -39,7 +41,7 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     }
 
     @Override
-    public void configureRabbitListeners(final RabbitListenerEndpointRegistrar registrar) {
+    public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(myHandlerMethodFactory());
     }
 
@@ -54,8 +56,8 @@ public class RabbitMQConfig implements RabbitListenerConfigurer {
     }
 
     @Bean
-    Binding binding() {
-        return BindingBuilder.bind(queue()).to(exchange()).with(routingkey);
+    Binding binding(final Queue queue, final DirectExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with(routingkey);
     }
 
 }

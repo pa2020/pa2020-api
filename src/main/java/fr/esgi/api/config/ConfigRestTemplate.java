@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ConfigRestTemplate {
-
     @Bean
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
