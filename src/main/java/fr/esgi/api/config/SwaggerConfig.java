@@ -20,19 +20,20 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.esgi.microservices"))
-                .build();
+                .apis(RequestHandlerSelectors.basePackage("fr.esgi.api"))
+                .build()
+                .apiInfo(getApiInfo());
     }
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
                 "Contact Application API",
-                "Application Micro-Services with Spring Boot RESTful",
-                "V1",
+                "Application Micro-Services with Spring Boot RESTful for analysis sentiment",
+                "V2.0",
                 "Free to use",
-                new Contact("micro-services-commands", "micro-ci-commands.com", "zakaria.fahraoui@gmail.com"),
-                "API License BY micro-ci-commands 1.0",
-                "https://micro-ci-commands.com/licenses",
+                new Contact("NoticeTracker-analysis-sentiment", "Notice-Tracker.com", "zakaria.fahraoui@gmail.com"),
+                "API License BY Notice-Tracker 2.0",
+                "https://Notice-Tracker.com/licenses",
                 Collections.emptyList()
         );
     }
