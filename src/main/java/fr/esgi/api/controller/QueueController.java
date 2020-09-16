@@ -29,7 +29,7 @@ public class QueueController {
 
     @GetMapping("/user_id")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String getId(@RequestParam(required = false) Long id) {
+    public ResponseEntity<String> getId(@RequestParam(required = false) Long id) {
         return queueService.getQueueByRequestId(id);
     }
 

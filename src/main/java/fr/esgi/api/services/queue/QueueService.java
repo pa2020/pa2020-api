@@ -3,6 +3,7 @@ package fr.esgi.api.services.queue;
 import fr.esgi.api.dto.queue.QueueDto;
 import fr.esgi.api.models.queue.Queue;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class QueueService implements IQueueService {
 
     @Transactional(readOnly = true)
     @Override
-    public String getQueueByRequestId(Long request_id) {
+    public ResponseEntity<String> getQueueByRequestId(Long request_id) {
         return queueDto.getQueueByRequestId(request_id);
     }
 
