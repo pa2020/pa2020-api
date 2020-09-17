@@ -33,7 +33,6 @@ public class RequestController {
     private final IQueueService queueService;
     //    private final RestTemplate restTemplate;
     private final Producer producer;
-    //    private final TaskReceiver taskReceiver;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping
@@ -62,17 +61,9 @@ public class RequestController {
         return requestService.findRequestByUser_Id(id);
     }
 
-//    @GetMapping
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    public String getRequestNoConsumer() {
-//        sendRequest();
-//        return ;
-//    }
-
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String sendRequest(@RequestBody Request request) throws IOException {
-        //Request savedRequest= requestService.create(request);
         logger.info("< sendRequest bodyRequest:{}", request.getSentence());
         if (request.getSentence().isEmpty() || request.getSentence() == null) {
             throw new ResourceNotFoundException("Your sentence is empty");
@@ -108,32 +99,3 @@ public class RequestController {
         return ResponseEntity.ok().body("Your request has been deleted");
     }
 }
-//
-//    @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-//    public String sendRequest(@RequestBody Request request) {
-//        //Request savedRequest= requestService.create(request);
-//        logger.info("< sendRequest bodyRequest:{}", request.getSentence());
-//        String url = "http://wiirlak.dynamic-dns.net:2000/analyze";
-//        // create headers
-//        HttpHeaders headers = new HttpHeaders();
-//        // set `content-type` header
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        // set `accept` header
-//        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-//        // create a post object'[
-//        Request savedRequest = requestService.create(request);
-//        if (request.getSentence().isEmpty() || request.getSentence() == null) {
-//            throw new ResourceNotFoundException("Your sentence is empty");
-//        } else {
-//            // build the request
-//            HttpEntity<Request> entity = new HttpEntity<>(savedRequest, headers);
-//            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-//            // check response status code
-//            if (response.getStatusCode() == HttpStatus.OK) {
-//                return response.getBody();
-//            } else {
-//                throw new ResourceNotFoundException("Request i'not send to client lourd!");
-//            }
-//        }
-//    }

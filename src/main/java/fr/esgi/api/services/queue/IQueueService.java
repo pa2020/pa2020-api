@@ -4,7 +4,7 @@ import fr.esgi.api.models.queue.Queue;
 import org.springframework.http.ResponseEntity;
 
 /**
- * Created by Alexis DESJARDINS.
+ * Created by Zakaria FAHRAOUI.
  */
 
 public interface IQueueService {

@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by Alexis DESJARDINS.
+ * Created by Zakaria FAHRAOUI.
  */
 
 @Setter

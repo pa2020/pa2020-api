@@ -22,11 +22,6 @@ public class StatsDto implements IStatsDto {
     private final StatsRepository statsRepository;
     private final WordRepository wordRepository;
 
-    /**
-     * The Logger for this class.
-     */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Override
     public List<Stats> listStatsOfWord(String word) {
         Optional<Word> search = Optional.ofNullable(wordRepository.findByWordIsLike(word));

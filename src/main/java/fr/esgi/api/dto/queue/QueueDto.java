@@ -3,7 +3,6 @@ package fr.esgi.api.dto.queue;
 import com.google.gson.Gson;
 import fr.esgi.api.exception.ResourceNotFoundException;
 import fr.esgi.api.models.queue.Queue;
-import fr.esgi.api.models.statistics.Word;
 import fr.esgi.api.repositories.queue.QueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alexis DESJARDINS.
+ * Created by Zakaria FAHRAOUI.
  */
 
 @Component
@@ -23,7 +22,6 @@ public class QueueDto implements IQueueDto {
 
     private final QueueRepository queueRepository;
 
-    //  private final UserRepository userRepository;
     @Override
     public Queue createQueue(Queue queue) {
         return queueRepository.save(queue);
@@ -41,7 +39,7 @@ public class QueueDto implements IQueueDto {
         List<Queue> all_queue = queueRepository.findAll();
         List<Queue> queueListByUser = queueRepository.listRequestByUserId(user_id);
         if (all_queue.isEmpty()) {
-            return new ResponseEntity<>("File d'attente vide", HttpStatus.OK);
+            return new ResponseEntity<>(all_queue.toString(), HttpStatus.OK);
         }
         List<ExtendedQueue> LQR = new ArrayList<>();
         for (int i = 0; i < all_queue.size(); i++) {
@@ -72,7 +70,7 @@ public class QueueDto implements IQueueDto {
         }
     }
 
-    private class ExtendedQueue {
+    private static class ExtendedQueue {
         Queue queue;
         int position;
         int total;

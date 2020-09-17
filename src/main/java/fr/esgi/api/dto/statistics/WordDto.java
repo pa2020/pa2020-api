@@ -19,11 +19,6 @@ import java.util.Optional;
 public class WordDto implements IWordDto {
     private final WordRepository wordRepository;
 
-    /**
-     * The Logger for this class.
-     */
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Override
     public List<Word> findAll() {
         List<Word> wordList = wordRepository.findAll();
