@@ -1,7 +1,7 @@
 package fr.esgi.api.controller;
 
-import fr.esgi.api.broker.Producer;
 import fr.esgi.api.exception.ResourceNotFoundException;
+import fr.esgi.api.kafka.KafkaProducer;
 import fr.esgi.api.models.queue.Queue;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.queue.IQueueService;
@@ -32,7 +32,8 @@ public class RequestController {
     private final IRequestService requestService;
     private final IQueueService queueService;
     //    private final RestTemplate restTemplate;
-    private final Producer producer;
+//    private final Producer producer;
+    private final KafkaProducer kafkaProducer;
     //    private final TaskReceiver taskReceiver;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -79,7 +80,8 @@ public class RequestController {
         } else {
             // create a post object
             String requestSend = requestService.create(request);
-            producer.sendMessage(requestSend);
+//            producer.sendMessage(requestSend);
+            kafkaProducer.send(requestSend);
             Queue addToQueue = new Queue();
             addToQueue.setRequestId(request.getRequest_id());
             addToQueue.setUser(request.getUser());
