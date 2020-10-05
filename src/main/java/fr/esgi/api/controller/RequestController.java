@@ -1,7 +1,7 @@
 package fr.esgi.api.controller;
 
 import fr.esgi.api.exception.ResourceNotFoundException;
-import fr.esgi.api.kafka.KafkaProducer;
+import fr.esgi.api.kafka.KafkaProducerRequest;
 import fr.esgi.api.models.queue.Queue;
 import fr.esgi.api.models.request.Request;
 import fr.esgi.api.services.queue.IQueueService;
@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +24,7 @@ import java.util.Optional;
  * Created by Zakaria FAHRAOUI.
  */
 
+@EnableKafka
 @RestController
 @RequestMapping("/api/v1/requests")
 @CrossOrigin(origins = "*")
@@ -33,7 +34,7 @@ public class RequestController {
     private final IQueueService queueService;
     //    private final RestTemplate restTemplate;
 //    private final Producer producer;
-    private final KafkaProducer kafkaProducer;
+    private final KafkaProducerRequest kafkaProducer;
     //    private final TaskReceiver taskReceiver;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -72,16 +73,13 @@ public class RequestController {
 
     @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String sendRequest(@RequestBody Request request) throws IOException {
-        //Request savedRequest= requestService.create(request);
+    public String sendRequest(@RequestBody Request request) {
         logger.info("< sendRequest bodyRequest:{}", request.getSentence());
         if (request.getSentence().isEmpty() || request.getSentence() == null) {
             throw new ResourceNotFoundException("Your sentence is empty");
         } else {
-            // create a post object
             String requestSend = requestService.create(request);
-//            producer.sendMessage(requestSend);
-            kafkaProducer.send(requestSend);
+            kafkaProducer.sendMessage(requestSend);
             Queue addToQueue = new Queue();
             addToQueue.setRequestId(request.getRequest_id());
             addToQueue.setUser(request.getUser());
@@ -96,11 +94,11 @@ public class RequestController {
         logger.info("> updateRequest id:{}", request.getRequest_id());
         Request updateRequest = requestService.update(request, id);
         if (updateRequest == null) {
-            return new ResponseEntity<Request>(
+            return new ResponseEntity<>(
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
         logger.info("< updateRequest id:{}", request.getRequest_id());
-        return new ResponseEntity<Request>(updateRequest, HttpStatus.OK);
+        return new ResponseEntity<>(updateRequest, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
