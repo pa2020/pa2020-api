@@ -51,7 +51,7 @@ public class QueueDto implements IQueueDto {
             }
         }
         if (LQR.size() == 0) {
-            return new ResponseEntity<>("Requête non présente dans la file d'attente", HttpStatus.OK);
+            return new ResponseEntity<>(LQR.toString(), HttpStatus.OK);
         }
         return new ResponseEntity<>(gson.toJson(LQR), HttpStatus.OK);
     }
